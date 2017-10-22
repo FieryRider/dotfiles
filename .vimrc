@@ -10,7 +10,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'L9'
+Plugin 'vim-scripts/L9'
 
 
 """""""""""End Vundle Init"""""""""""
@@ -52,27 +52,41 @@ filetype plugin indent on    " required
 " """""""""""""""""End Vundle"""""""""""""""""""""
 " """"""""""""""""""""""""""""""""""""""""""""""""
 
-" Disable mouse support (This was the default setting in previous versions)
+"Disable mouse support (This was the default setting in previous versions)
 set mouse=
+set bg=dark
+
+"Syntax highlighting and indentation
 syntax on 
 filetype plugin on
 filetype indent on
 "execute pathogen#infect()
 
-set bg=dark
+"Sets different cursor in normal/insert mode
+if &term =~ '^xterm'
+  let &t_SI .= "\<Esc>[6 q"
+  let &t_EI .= "\<Esc>[2 q"
+"  " 1 or 0 -> blinking block
+"  " 2 -> solid block
+"  " 3 -> blinking underscore
+"  " 4 -> solid underscore
+"  " Recent versions of xterm (282 or above) also support
+"  " 5 -> blinking vertical bar
+"  " 6 -> solid vertical bar
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 set hlsearch	"highlights search results
 hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white	"adjust cursor color
 set cul       "highlights current line
-set matchpairs+=<:>	"sets % to jump between < and > . Command is 'set matchpairs+=', params are <:>,...,..
-			"pairs separator ','  characted separator ':'
 "autocmd Filetype html setlocal ts=2 sts=2 sw=2
 "autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 "autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 
+"""""""Fuctions"""""""
 fun! UpByIndent()
   norm! ^
   let start_col = col(".")
@@ -89,6 +103,30 @@ fun! UpByIndent()
   endwhile
 endfun
 
+function! Smart_TabComplete()
+  let line = getline('.')                         " current line
+
+  let substr = strpart(line, -1, col('.')+1)      " from the start of the curren
+t
+                                                  " line to one character right
+                                                  " of the cursor
+  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+  if (strlen(substr)==0)                          " nothing to match on empty st
+ring
+    return "\<tab>"
+  endif
+  let has_period = match(substr, '\.') != -1      " position of period, if any
+  let has_slash = match(substr, '\/') != -1       " position of slash, if any
+  if (!has_slash)
+    return "\<C-P>"                         " existing text matching
+  elseif ( has_slash )
+    return "\<C-X>\<C-F>"                         " file matching
+  endif
+endfunction
+
+"""""End Functions"""""
+
+"""""""Remaps"""""""
 no <down> <Nop>
 no <up> <Nop>
 no <left> <Nop>
@@ -110,10 +148,12 @@ nn : ;
 nn <c-p> :call UpByIndent()<cr>
 nn <Leader>n :NERDTree<CR>
 nn <Leader>f :FufFile<CR>
-ino ' ''<ESC>i
-ino " ""<ESC>i
 nn go o<ESC>k
 nn gO O<ESC>j
+ino ' ''<ESC>i
+ino " ""<ESC>i
 ino ( ()<ESC>i
-"no { {<ESC>o}<ESC>O
+"ino { {<ESC>o}<ESC>O
 ino [ []<ESC>i
+"ino <tab> <c-r>=Smart_TabComplete()<CR>
+"""""End Remaps"""""

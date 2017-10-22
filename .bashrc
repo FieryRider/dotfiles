@@ -49,7 +49,11 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 ####### Functions #######
-if [[ $(uname -a) == *"apparmor"* ]] || [[ $(uname -a ) == *"ARCH"* ]]; then
+[[ $(cat /etc/*-release | grep 'NAME') == *"Debian"* ]] && release_debian=true || release_debian=false
+[[ $(cat /etc/*-release | grep 'NAME') == *"Ubuntu"* ]] && release_ubuntu=true || release_ubuntu=false
+[[ $(cat /etc/*-release | grep 'NAME') == *"Arch Linux"* ]] && release_arch=true || release_arch=false
+
+if $release_arch; then
 	sdserver () {
 		sudo umount -R /mnt/server/*;
 		sudo umount -R /mnt/server;
@@ -77,7 +81,7 @@ if [[ $(uname -a) == *"apparmor"* ]] || [[ $(uname -a ) == *"ARCH"* ]]; then
 	}
 fi
 
-if [[ $(uname -a) == *"Debian"* ]]; then
+if $release_debian || $release_ubuntu ; then
 	update () {
         if sudo apt update; then
                 if sudo apt upgrade; then
@@ -101,9 +105,9 @@ gpp () {
 }
 
 backup-chromium () {
-	rm -r /home/ivailo/bkp/chromium.old
-	mv /home/ivailo/bkp/chromium /home/ivailo/bkp/chromium.old
-	cp -r /home/ivailo/.config/chromium /home/ivailo/bkp/
+	rm -r ~/bkp/chromium.old
+	mv ~/bkp/chromium ~/bkp/chromium.old
+	cp -r ~/.config/chromium ~/bkp/
 }
 
 sync-keepass-passwords () {
