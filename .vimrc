@@ -62,10 +62,10 @@ filetype plugin on
 filetype indent on
 "execute pathogen#infect()
 
-"Sets different cursor in normal/insert mode
-if &term =~ '^xterm'
-  let &t_SI .= "\<Esc>[6 q"
-  let &t_EI .= "\<Esc>[2 q"
+""Sets different cursor in normal/insert mode
+"if &term =~ '^xterm'
+"  let &t_SI .= "\<Esc>[6 q"
+"  let &t_EI .= "\<Esc>[4 q"
 "  " 1 or 0 -> blinking block
 "  " 2 -> solid block
 "  " 3 -> blinking underscore
@@ -73,11 +73,11 @@ if &term =~ '^xterm'
 "  " Recent versions of xterm (282 or above) also support
 "  " 5 -> blinking vertical bar
 "  " 6 -> solid vertical bar
-else
+"else
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_SR = "\<Esc>]50;CursorShape=2\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+"endif
 
 set hlsearch	"highlights search results
 hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white	"adjust cursor color
@@ -156,4 +156,6 @@ ino ( ()<ESC>i
 "ino { {<ESC>o}<ESC>O
 ino [ []<ESC>i
 "ino <tab> <c-r>=Smart_TabComplete()<CR>
+vno < <gv " selection remains after indenting
+vno > >gv " selection remains after indenting
 """""End Remaps"""""

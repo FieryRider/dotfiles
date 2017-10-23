@@ -54,35 +54,35 @@ fi
 [[ $(cat /etc/*-release | grep 'NAME') == *"Arch Linux"* ]] && release_arch=true || release_arch=false
 
 if $release_arch; then
-	sdserver () {
+	function sdserver () {
 		sudo umount -R /mnt/server/*;
 		sudo umount -R /mnt/server;
 		ssh ivailo@ivailoserv.fierydom "sudo poweroff"
 	}
 
-	mount-encr () {
+	function mount-encr () {
 		sudo cryptsetup --type luks open /dev/sda4 encr;
 		sudo mount /dev/mapper/encr /mnt/encr/
 	}
 
-	umount-encr () {
+	function umount-encr () {
 		sudo umount /mnt/encr/;
 		sudo cryptsetup close /dev/mapper/encr;
 	}
 
-	gpu-vfio () {
+	function gpu-vfio () {
 		sudo mv /etc/modprobe.d/vfio.conf.bak /etc/modprobe.d/vfio.conf
 		sudo mv /etc/modules-load.d/vfio.conf.bak /etc/modules-load.d/vfio.conf
 	}
 
-	gpu-nvidia () {
+	function gpu-nvidia () {
 		sudo mv /etc/modprobe.d/vfio.conf /etc/modprobe.d/vfio.conf.bak
 		sudo mv /etc/modules-load.d/vfio.conf /etc/modules-load.d/vfio.conf.bak
 	}
 fi
 
 if $release_debian || $release_ubuntu ; then
-	update () {
+	function update () {
         if sudo apt update; then
                 if sudo apt upgrade; then
                         sudo apt dist-upgrade
@@ -91,7 +91,7 @@ if $release_debian || $release_ubuntu ; then
 	}
 fi
 
-iptables-off () {
+function iptables-off () {
 	sudo iptables -X
 	sudo iptables -F
 	sudo iptables -P FORWARD ACCEPT
@@ -99,18 +99,18 @@ iptables-off () {
 	sudo iptables -P OUTPUT ACCEPT
 }
 
-gpp () {
+function gpp () {
 	 g++ -o "${1%.*}.out" "$1";
 	 ./"${1%.*}.out"
 }
 
-backup-chromium () {
+function backup-chromium () {
 	rm -r ~/bkp/chromium.old
 	mv ~/bkp/chromium ~/bkp/chromium.old
 	cp -r ~/.config/chromium ~/bkp/
 }
 
-sync-keepass-passwords () {
+function sync-keepass-passwords () {
 	while IFS= read -r -d $'\0'; do dbFiles+=("$REPLY"); done < <(find /run/media/ivailo -iname casual.kdbx -print0)
 	newestDB="${dbFiles[0]}"
 	for x in "${dbFiles[@]}"; do
