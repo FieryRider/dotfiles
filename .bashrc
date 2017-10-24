@@ -29,7 +29,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 if [ "$PS1" ]; then
-complete -cf sudo
+	complete -cf sudo
 fi
 
 ####### Exports #######
@@ -91,6 +91,16 @@ if $release_debian || $release_ubuntu ; then
 	}
 fi
 
+function set_terminal_var () {
+	local pid=$$
+	local pid=$(ps -h -o ppid -p $pid 2>/dev/null)
+	export TERM_EMU=$(ps -h -o comm -p $pid 2>/dev/null)
+}
+
+function ssh () {
+	ssh $1 -t 'bash -l -c "export TERM_EMU="$TERM_EMU"; bash"'
+}
+
 function iptables-off () {
 	sudo iptables -X
 	sudo iptables -F
@@ -125,6 +135,10 @@ function sync-keepass-passwords () {
 }
 
 ##### End Functions #####
+
+if ! [ -v TERM_EMU ]; then
+	set_terminal_var
+fi
 
 HISTSIZE=4000
 HISTFILESIZE=4000

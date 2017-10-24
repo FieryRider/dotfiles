@@ -62,22 +62,33 @@ filetype plugin on
 filetype indent on
 "execute pathogen#infect()
 
-""Sets different cursor in normal/insert mode
-"if &term =~ '^xterm'
-"  let &t_SI .= "\<Esc>[6 q"
-"  let &t_EI .= "\<Esc>[4 q"
-"  " 1 or 0 -> blinking block
-"  " 2 -> solid block
-"  " 3 -> blinking underscore
-"  " 4 -> solid underscore
-"  " Recent versions of xterm (282 or above) also support
-"  " 5 -> blinking vertical bar
-"  " 6 -> solid vertical bar
-"else
+"Sets different cursor in normal/insert mode
+"@TERM_EMU - manially set if in ssh, else set in .bashrc
+"&t_SI - start insert mode
+"&t_EI - exit insert mode
+if $TERM_EMU =~ "gnome-terminal"
+  let &t_SI .= "\<Esc>[6 q"
+  let &t_SR .= "\<Esc>[4 q"
+  let &t_EI .= "\<Esc>[2 q"
+  " 1 or 0 -> blinking block
+  " 2 -> solid block
+  " 3 -> blinking underscore
+  " 4 -> solid underscore
+  " Recent versions of xterm (282 or above) also support
+  " 5 -> blinking vertical bar
+  " 6 -> solid vertical bar
+elseif $TERM_EMU =~ 'konsole'
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_SR = "\<Esc>]50;CursorShape=2\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-"endif
+  " 0 -> block
+  " 1 -> vertical line
+  " 2 -> underscore
+elseif ($TERM_EMU =~ 'tilda') || ($TERM_EMU =~ 'xfce4-terminal')
+  let &t_SI .= "\<Esc>[6 q"
+  let &t_SR .= "\<Esc>[4 q"
+  let &t_EI .= "\<Esc>[2 q"
+endif
 
 set hlsearch	"highlights search results
 hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white	"adjust cursor color
