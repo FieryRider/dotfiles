@@ -91,12 +91,6 @@ if $release_debian || $release_ubuntu ; then
 	}
 fi
 
-function set_terminal_var () {
-	local pid=$$
-	local pid=$(ps -h -o ppid -p $pid 2>/dev/null)
-	export TERM_EMU=$(ps -h -o comm -p $pid 2>/dev/null)
-}
-
 function ssh () {
 	ssh $1 -t 'bash -l -c "export TERM_EMU="$TERM_EMU"; bash"'
 }
@@ -135,10 +129,6 @@ function sync-keepass-passwords () {
 }
 
 ##### End Functions #####
-
-if ! [ -v TERM_EMU ]; then
-	set_terminal_var
-fi
 
 HISTSIZE=4000
 HISTFILESIZE=4000
