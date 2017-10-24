@@ -66,7 +66,7 @@ filetype indent on
 "@TERM_EMU - manially set if in ssh, else set in .bashrc
 "&t_SI - start insert mode
 "&t_EI - exit insert mode
-if $TERM_EMU =~ "gnome-terminal"
+if $TERM_EMU =~ 'gnome-terminal'
   let &t_SI .= "\<Esc>[6 q"
   let &t_SR .= "\<Esc>[4 q"
   let &t_EI .= "\<Esc>[2 q"
