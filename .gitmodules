@@ -1,3 +1,0 @@
-[submodule ".vim/bundle/FuzzyFinder"]
-	path = .vim/bundle/FuzzyFinder
-	url = git@github.com:vim-scripts/FuzzyFinder.git
