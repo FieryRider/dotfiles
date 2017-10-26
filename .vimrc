@@ -12,7 +12,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-scripts/L9'
 
-
 """""""""""End Vundle Init"""""""""""
 
 """""""""""Snipmate"""""""""""""
@@ -26,14 +25,16 @@ Plugin 'honza/vim-snippets'
 """""""""End SnipMate""""""""""""
 
 """"""""""""""PHP"""""""""""""""
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/unite.vim'
 Bundle 'ervandew/supertab'
 Bundle 'm2mdas/phpcomplete-extended'
 """""""""""""End PHP""""""""""""
 
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/FuzzyFinder'
+""Required for some of the functionality of unite.vim
+"Bundle 'Shougo/vimproc'
+""Advanced fuzzy-finder
+"Bundle 'Shougo/unite.vim' 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -61,7 +62,19 @@ set rnu
 syntax on 
 filetype plugin on
 filetype indent on
-"execute pathogen#infect()
+
+set fileformat=unix
+set encoding=utf-8
+
+"@return pid: String: Parent PID of the given PID
+function GetPPID(pid)
+	return system('echo $(ps -o ppid= '. a:pid .')')
+endfunction
+
+"@param pid: String: PID of the program
+function GetProgramName(pid)
+	return system('echo $(ps -o comm= '. a:pid .')')
+endfunction
 
 "Sets different cursor in normal/insert mode
 "@TERM_EMU - manially set if in ssh session
@@ -70,9 +83,16 @@ filetype indent on
 if exists('$TERM_EMU')
   let TERM_EMU = $TERM_EMU
 else
-  let parent_shell_pid = system('echo $(ps -o ppid= $PPID)')
-  let term_emu_pid = system('echo $(ps -o ppid= ' . parent_shell_pid . ')')
-  let TERM_EMU = system('echo $(ps -o comm= ' . term_emu_pid . ')')
+  if exists("$TMUX") || exists("$TMUX_PANE")
+    let tmux_pid = system('echo $(tmux display-message -p "#{client_pid}")')
+    let parent_shell_pid = GetPPID(tmux_pid)
+  else
+    let vim_pid = system('echo $PPID')
+    let parent_shell_pid = GetPPID(vim_pid)
+  endif
+
+  let term_emu_pid = GetPPID(parent_shell_pid)
+  let TERM_EMU = GetProgramName(term_emu_pid)
 endif
 
 if (TERM_EMU =~ 'gnome-terminal') || (TERM_EMU =~ 'tilda') || (TERM_EMU =~ 'xfce4-terminal')
@@ -87,18 +107,26 @@ if (TERM_EMU =~ 'gnome-terminal') || (TERM_EMU =~ 'tilda') || (TERM_EMU =~ 'xfce
   " 5 -> blinking vertical bar
   " 6 -> solid vertical bar
 elseif TERM_EMU =~ 'konsole'
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-  " 0 -> block
-  " 1 -> vertical line
-  " 2 -> underscore
+  if exists("$TMUX") || exists("$TMUX_PANE")
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    " 0 -> block
+    " 1 -> vertical line
+    " 2 -> underscore
+    endif
 endif
 
 set hlsearch	"highlights search results
 hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white	"adjust cursor color
-set cul       "highlights current line
-"autocmd Filetype html setlocal ts=2 sts=2 sw=2
+set cul 	"highlights current line
+
+"Set in their own .vim files
+"autocmd Filetype html setlocal ts=4 sts=4 sw=4
 "autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 "autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 
@@ -118,27 +146,6 @@ fun! UpByIndent()
     endif
   endwhile
 endfun
-
-function! Smart_TabComplete()
-  let line = getline('.')                         " current line
-
-  let substr = strpart(line, -1, col('.')+1)      " from the start of the curren
-t
-                                                  " line to one character right
-                                                  " of the cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty st
-ring
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_slash)
-    return "\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  endif
-endfunction
 
 """""End Functions"""""
 
@@ -167,11 +174,11 @@ nn <Leader>f :FufFile<CR>
 nn go o<ESC>k
 nn gO O<ESC>j
 ino ' ''<ESC>i
-ino " ""<ESC>i
+"ino " ""<ESC>i
 ino ( ()<ESC>i
 "ino { {<ESC>o}<ESC>O
 ino [ []<ESC>i
-"ino <tab> <c-r>=Smart_TabComplete()<CR>
+"ino <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
 vno < <gv " selection remains after indenting
 vno > >gv " selection remains after indenting
 """""End Remaps"""""
