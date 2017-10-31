@@ -92,7 +92,7 @@ if $release_debian || $release_ubuntu ; then
 fi
 
 function ssh () {
-	ssh $1 -t 'bash -l -c "export TERM_EMU="$TERM_EMU"; bash"'
+	command ssh $1 -t 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash"'
 }
 
 function iptables-off () {
