@@ -25,8 +25,8 @@ Plugin 'honza/vim-snippets'
 """""""""End SnipMate""""""""""""
 
 """"""""""""""PHP"""""""""""""""
-Bundle 'ervandew/supertab'
-Bundle 'm2mdas/phpcomplete-extended'
+"Bundle 'ervandew/supertab'
+"Bundle 'm2mdas/phpcomplete-extended'
 """""""""""""End PHP""""""""""""
 
 Bundle 'tpope/vim-surround'

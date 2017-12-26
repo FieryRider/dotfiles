@@ -1,3 +1,4 @@
+
 #
 # ~/.bashrc
 #
@@ -83,11 +84,11 @@ fi
 
 if $release_debian || $release_ubuntu ; then
 	function update () {
-        if sudo apt update; then
-                if sudo apt upgrade; then
-                        sudo apt dist-upgrade
-                fi
-        fi
+		if sudo apt update; then
+			if sudo apt upgrade; then
+				sudo apt dist-upgrade
+			fi
+		fi
 	}
 fi
 
@@ -109,9 +110,22 @@ function gpp () {
 }
 
 function backup-chromium () {
-	rm -r ~/bkp/chromium.old
-	mv ~/bkp/chromium ~/bkp/chromium.old
-	cp -r ~/.config/chromium ~/bkp/
+	unset backups; unset num_of_backups; unset num_backups_to_delete
+
+	for d in ~/bkp/chromium*; do
+		backups+=($d)
+	done
+	num_of_backups=${#backups[@]}
+
+	if [[ $num_of_backups -gt 7 ]]; then
+		num_backups_to_delete=$(( $num_of_backups - 7 ))
+		while [[ $num_backups_to_delete -gt 0 ]]; do
+			rm -r "${backups[0]}"
+			(( num_backups_to_delete-- ))
+		done
+	fi
+
+	cp -r ~/.config/chromium ~/bkp/chromium_$(date +%F_%H:%M)
 }
 
 function sync-keepass-passwords () {
