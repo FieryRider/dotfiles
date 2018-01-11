@@ -86,7 +86,7 @@ if $release_debian || $release_ubuntu ; then
 	function update () {
 		if sudo apt update; then
 			if sudo apt upgrade; then
-				sudo apt dist-upgrade
+				sudo apt full-upgrade
 			fi
 		fi
 	}
@@ -144,6 +144,7 @@ function sync-keepass-passwords () {
 
 ##### End Functions #####
 
+PATH=$PATH:~/.android/platform-tools/:~/.android/tools/
 HISTSIZE=4000
 HISTFILESIZE=4000
 HISTIGNORE='g++*:gpp:./*.out:vi .bash_history'

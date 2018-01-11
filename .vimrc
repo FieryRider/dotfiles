@@ -55,11 +55,14 @@ filetype plugin indent on    " required
 
 "Disable mouse support (This was the default setting in previous versions)
 set mouse=
-set bg=dark
+
+"Enable line numbers
 set rnu
+set nu
 
 "Syntax highlighting and indentation
 syntax on 
+set bg=dark
 filetype plugin on
 filetype indent on
 
@@ -67,12 +70,12 @@ set fileformat=unix
 set encoding=utf-8
 
 "@return pid: String: Parent PID of the given PID
-function GetPPID(pid)
+function! GetPPID(pid)
 	return system('echo $(ps -o ppid= '. a:pid .')')
 endfunction
 
 "@param pid: String: PID of the program
-function GetProgramName(pid)
+function! GetProgramName(pid)
 	return system('echo $(ps -o comm= '. a:pid .')')
 endfunction
 
@@ -91,9 +94,15 @@ else
     let parent_shell_pid = GetPPID(vim_pid)
   endif
 
+  if substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sudo"
+    let chkvar = "chk"
+    let parent_shell_pid = GetPPID(parent_shell_pid)
+  endif
+
   let term_emu_pid = GetPPID(parent_shell_pid)
   let TERM_EMU = GetProgramName(term_emu_pid)
 endif
+
 
 if (TERM_EMU =~ 'gnome-terminal') || (TERM_EMU =~ 'tilda') || (TERM_EMU =~ 'xfce4-terminal')
   let &t_SI .= "\<Esc>[6 q"
