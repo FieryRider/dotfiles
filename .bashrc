@@ -49,6 +49,10 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+if [ ! -v TERM_EMU ]; then
+	TERM_EMU=$(ps -o comm= $(ps -o ppid= $$))
+fi
+
 ####### Functions #######
 [[ $(cat /etc/*-release | grep 'NAME') == *"Debian"* ]] && release_debian=true || release_debian=false
 [[ $(cat /etc/*-release | grep 'NAME') == *"Ubuntu"* ]] && release_ubuntu=true || release_ubuntu=false
