@@ -24,11 +24,6 @@ Plugin 'honza/vim-snippets'
 
 """""""""End SnipMate""""""""""""
 
-""""""""""""""PHP"""""""""""""""
-"Bundle 'ervandew/supertab'
-"Bundle 'm2mdas/phpcomplete-extended'
-"""""""""""""End PHP""""""""""""
-
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/FuzzyFinder'
 ""Required for some of the functionality of unite.vim

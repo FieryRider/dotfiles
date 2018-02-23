@@ -151,5 +151,5 @@ function sync-keepass-passwords () {
 PATH=$PATH:~/.android/platform-tools/:~/.android/tools/
 HISTSIZE=4000
 HISTFILESIZE=4000
-HISTIGNORE='g++*:gpp:./*.out:vi .bash_history'
+HISTIGNORE='vi .bash_history'
 HISTCONTROL=ignoreboth
