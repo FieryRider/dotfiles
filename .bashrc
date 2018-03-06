@@ -18,7 +18,7 @@ alias vi='vim'
 alias bell='aplay ~/Music/chime.wav'
 alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
-alias qemu-win8='tmux new-session -d -s qemu ~/Stuff/Scripts/qemu-win8-start.sh'
+alias qemu-win8='tmux new-session -d -s qemu ~/stuff/scripts/qemu-win8-start.sh'
 alias kdeshutdown='qdbus org.kde.ksmserver /KSMServer logout 0 2 1' # https://api.kde.org/4.x-api/kde-workspace-apidocs/plasma-workspace/html/namespaceKWorkSpace.html#a0c75f4db070a83b47f0bfc5026383aeb
 alias kderestart='qdbus org.kde.ksmserver /KSMServer logout 0 1 1'
 
