@@ -18,7 +18,7 @@ alias vi='vim'
 alias bell='aplay ~/Music/chime.wav'
 alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
-alias qemu-win8='tmux new-session -d -s qemu ~/stuff/scripts/qemu-win8-start.sh'
+alias start-win10="systemctl --user restart synergys && virsh -c 'qemu:///system' start Windows10"
 alias kdeshutdown='qdbus org.kde.ksmserver /KSMServer logout 0 2 1' # https://api.kde.org/4.x-api/kde-workspace-apidocs/plasma-workspace/html/namespaceKWorkSpace.html#a0c75f4db070a83b47f0bfc5026383aeb
 alias kderestart='qdbus org.kde.ksmserver /KSMServer logout 0 1 1'
 
@@ -62,11 +62,11 @@ if $release_arch; then
 	function sdserver () {
 		sudo umount -R /mnt/server/*;
 		sudo umount -R /mnt/server;
-		ssh ivailo@ivailoserv.fierydom "sudo poweroff"
+		command ssh ivailo@192.168.0.151 "sudo poweroff"
 	}
 
 	function mount-encr () {
-		sudo cryptsetup --type luks open /dev/sda4 encr;
+		sudo cryptsetup --type luks open /dev/sdb4 encr;
 		sudo mount /dev/mapper/encr /mnt/encr/
 	}
 
@@ -97,7 +97,24 @@ if $release_debian || $release_ubuntu ; then
 fi
 
 function ssh () {
-	command ssh "$@" -t 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash"'
+	local remote; local options; local ssh_command; local remote_added=false
+
+	for arg in "$@"; do
+		if [[ $arg = *"@"* ]]; then
+			remote="$arg"
+			remote_added=true
+		else
+			if [[ "$remote_added" = true ]]; then
+				ssh_command="$arg"
+			else
+				if [[ "$arg" != "-t" ]]; then
+					options+="$arg "
+				fi
+			fi
+		fi
+	done
+	options+="-t"
+	command ssh $options $remote 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash $ssh_command"'
 }
 
 function iptables-off () {
@@ -109,12 +126,13 @@ function iptables-off () {
 }
 
 function gpp () {
-	 g++ -o "${1%.*}.out" "$1";
-	 ./"${1%.*}.out"
+	 if g++ -o "${1%.*}.out" "$1"; then
+		 ./"${1%.*}.out"
+	 fi
 }
 
 function backup-chromium () {
-	unset backups; unset num_of_backups; unset num_backups_to_delete
+	local backups; local num_of_backups; local num_backups_to_delete
 
 	for d in ~/bkp/chromium*; do
 		backups+=($d)
@@ -129,11 +147,17 @@ function backup-chromium () {
 		done
 	fi
 
-	cp -r ~/.config/chromium ~/bkp/chromium_$(date +%F_%H:%M)
+	while pgrep chromium; do
+		sleep 4
+	done
+	cp -a ~/.config/chromium ~/bkp/chromium_$(date +%F_%H:%M)
 }
 
 function sync-keepass-passwords () {
-	while IFS= read -r -d $'\0'; do dbFiles+=("$REPLY"); done < <(find /run/media/ivailo -iname casual.kdbx -print0)
+	while IFS= read -r -d $'\0'; do
+		dbFiles+=("$REPLY")
+	done < <(find /run/media/$USER -iname casual.kdbx -print0)
+
 	newestDB="${dbFiles[0]}"
 	for x in "${dbFiles[@]}"; do
 		[[ "$x" -ot "$newestDB" ]] || newestDB="$x"
@@ -151,5 +175,5 @@ function sync-keepass-passwords () {
 PATH=$PATH:~/.android/platform-tools/:~/.android/tools/
 HISTSIZE=4000
 HISTFILESIZE=4000
-HISTIGNORE='vi .bash_history'
+HISTIGNORE='&:vi .bash_history:vi ~/.bash_history:'
 HISTCONTROL=ignoreboth
