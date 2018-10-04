@@ -26,6 +26,7 @@ Plugin 'honza/vim-snippets'
 
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/FuzzyFinder'
+Bundle 'tomtom/tcomment_vim'
 ""Required for some of the functionality of unite.vim
 "Bundle 'Shougo/vimproc'
 ""Advanced fuzzy-finder
@@ -89,12 +90,11 @@ else
     let parent_shell_pid = GetPPID(vim_pid)
   endif
 
-  if substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sudo"
-    let chkvar = "chk"
+  while (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sudo") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "bash") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "virsh") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "systemctl") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sshd")
     let parent_shell_pid = GetPPID(parent_shell_pid)
-  endif
+  endwhile
 
-  let term_emu_pid = GetPPID(parent_shell_pid)
+  let term_emu_pid = parent_shell_pid
   let TERM_EMU = GetProgramName(term_emu_pid)
 endif
 
