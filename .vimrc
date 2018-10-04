@@ -101,8 +101,8 @@ endif
 
 if (TERM_EMU =~ 'gnome-terminal') || (TERM_EMU =~ 'tilda') || (TERM_EMU =~ 'xfce4-terminal')
   let &t_SI .= "\<Esc>[6 q"
-  let &t_SR .= "\<Esc>[4 q"
   let &t_EI .= "\<Esc>[2 q"
+  let &t_SR .= "\<Esc>[4 q"
   " 1 or 0 -> blinking block
   " 2 -> solid block
   " 3 -> blinking underscore
@@ -113,12 +113,12 @@ if (TERM_EMU =~ 'gnome-terminal') || (TERM_EMU =~ 'tilda') || (TERM_EMU =~ 'xfce
 elseif TERM_EMU =~ 'konsole'
   if exists("$TMUX") || exists("$TMUX_PANE")
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
   else
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
     " 0 -> block
     " 1 -> vertical line
     " 2 -> underscore
