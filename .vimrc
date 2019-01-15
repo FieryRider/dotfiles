@@ -91,7 +91,7 @@ else
     let parent_shell_pid = GetPPID(vim_pid)
   endif
 
-  while (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sudo") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "bash") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "virsh") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "systemctl") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sshd")
+  while (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sudo") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sudoedit") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "bash") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "virsh") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "systemctl") || (substitute(GetProgramName(parent_shell_pid), '\n', '', '') == "sshd")
     let parent_shell_pid = GetPPID(parent_shell_pid)
   endwhile
 
