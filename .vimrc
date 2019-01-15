@@ -27,6 +27,7 @@ Plugin 'honza/vim-snippets'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'tomtom/tcomment_vim'
+Bundle 'kana/vim-smartinput'
 ""Required for some of the functionality of unite.vim
 "Bundle 'Shougo/vimproc'
 ""Advanced fuzzy-finder
@@ -177,11 +178,11 @@ nn <Leader>n :NERDTree<CR>
 nn <Leader>f :FufFile<CR>
 nn go o<ESC>k
 nn gO O<ESC>j
-ino ' ''<ESC>i
+"ino ' ''<ESC>i
 "ino " ""<ESC>i
-ino ( ()<ESC>i
+"ino ( ()<ESC>i
 "ino { {<ESC>o}<ESC>O
-ino [ []<ESC>i
+"ino [ []<ESC>i
 "ino <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
 vno < <gv " selection remains after indenting
 vno > >gv " selection remains after indenting
