@@ -62,7 +62,7 @@ if $release_arch; then
   function sdserver () {
     sudo umount -R /mnt/server/*;
     sudo umount -R /mnt/server;
-    command ssh ivailo@192.168.0.151 "sudo poweroff"
+    command ssh ivailo@server "sudo poweroff"
   }
 
 function mount-encr () {
