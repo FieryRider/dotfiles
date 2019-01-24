@@ -122,48 +122,54 @@ function gpp () {
 }
 
 mednafen() {
-  file_name=$(basename "$1")
-  game_name=${file_name%*.7z}
-  7z x -o/tmp/"$game_name" "$1"
+  args="${@:1:$(($#-1))}"
+  file="${@: -1}"
+  if [[ "$file" =~ .*\.7z ]]; then
+    file_name=$(basename "$file")
+    game_name=${file_name%*.7z}
+    7z x -o/tmp/"$game_name" "$file"
 
-  # If there isn't a .cue file, pick one from EU .cue files collection or create one
-  if ! ls /tmp/"$game_name"/*.cue > /dev/null 2>&1; then
-    cue_file=$(find $PSX_GAMES/ -name "$game_name.cue" -print -quit)
-    if [[ -z "$cue_file" ]]; then
-      cue_file=$(find $PSX_GAMES/ -iname "${game_name/(Europe)/(E)}"*.cue -print -quit)
-    fi
-    if [[ -z "$cue_file" ]]; then
-      echo 'No .cue file available. Please specify a path to .cue file or leave black to create one (might not work)'
-      read -r cue_file
-    fi
-    if [[ -e $cue_file ]]; then
-      cp "$cue_file" /tmp/"$game_name"/"$game_name".cue
-    fi
-
-    # Create .cue file
-    if [[ -z "$cue_file" ]]; then
-      bin_file=''
-      # If there are multiple bin files pick the one with the game (Track 1)
-      if [[ $(ls -1 /tmp/"$game_name"/*.bin | wc -l) -gt 1 ]]; then
-        for f in /tmp/"$game_name"/*.bin; do
-          if [[ "$f" = *"(Track 1)"* ]]; then
-            bin_file="$f"
-            break
-          fi
-        done
-      else
-        bin_file=$(basename /tmp/"$game_name"/*.bin)
+    # If there isn't a .cue file, pick one from EU .cue files collection or create one
+    if ! ls /tmp/"$game_name"/*.cue > /dev/null 2>&1; then
+      cue_file=$(find $PSX_GAMES/ -name "$game_name.cue" -print -quit)
+      if [[ -z "$cue_file" ]]; then
+        cue_file=$(find $PSX_GAMES/ -iname "${game_name/(Europe)/(E)}"*.cue -print -quit)
       fi
-      cat > /tmp/"$game_name"/"$game_name".cue << EOF
-FILE "$bin_file" BINARY
-  TRACK 01 MODE2/2352
-    INDEX 01 00:00:00
-EOF
-    fi
-  fi
+      if [[ -z "$cue_file" ]]; then
+        echo 'No .cue file available. Please specify a path to .cue file or leave black to create one (might not work)'
+        read -r cue_file
+      fi
+      if [[ -e $cue_file ]]; then
+        cp "$cue_file" /tmp/"$game_name"/"$game_name".cue
+      fi
 
-  command mednafen /tmp/"$game_name"/*.cue
-  rm -r /tmp/"$game_name"
+      # Create .cue file
+      if [[ -z "$cue_file" ]]; then
+        bin_file=''
+        # If there are multiple bin files pick the one with the game (Track 1)
+        if [[ $(ls -1 /tmp/"$game_name"/*.bin | wc -l) -gt 1 ]]; then
+          for f in /tmp/"$game_name"/*.bin; do
+            if [[ "$f" = *"(Track 1)"* ]]; then
+              bin_file="$f"
+              break
+            fi
+          done
+        else
+          bin_file=$(basename /tmp/"$game_name"/*.bin)
+        fi
+        cat > /tmp/"$game_name"/"$game_name".cue << EOF
+FILE "$bin_file" BINARY
+TRACK 01 MODE2/2352
+INDEX 01 00:00:00
+EOF
+      fi
+    fi
+
+    command mednafen /tmp/"$game_name"/*.cue
+    rm -r /tmp/"$game_name"
+  elif [[ "$file"  =~ .*\.cue ]]; then
+    command mednafen "$args" "$file"
+  fi
 }
 
 function backup-chromium () {
