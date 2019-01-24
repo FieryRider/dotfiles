@@ -59,25 +59,25 @@ fi
 [[ $(cat /etc/*-release | grep 'NAME') == *"Arch Linux"* ]] && release_arch=true || release_arch=false
 
 if $release_arch; then
-  function sdserver () {
+  sdserver() {
     sudo umount -R /mnt/server/*;
     sudo umount -R /mnt/server;
     command ssh ivailo@server "sudo poweroff"
   }
 
-  function mount-encr () {
+  mount-encr() {
     sudo cryptsetup --type luks open /dev/sdb4 encr;
     sudo mount /dev/mapper/encr /mnt/encr/
   }
 
-  function umount-encr () {
+  umount-encr() {
     sudo umount /mnt/encr/;
     sudo cryptsetup close /dev/mapper/encr;
   }
 fi
 
 if $release_debian || $release_ubuntu ; then
-  function update () {
+  update() {
     if sudo apt update; then
       if sudo apt upgrade; then
         sudo apt full-upgrade
@@ -86,7 +86,7 @@ if $release_debian || $release_ubuntu ; then
   }
 fi
 
-function ssh () {
+ssh() {
   local remote; local options; local ssh_command; local remote_added=false
 
   for arg in "$@"; do
@@ -107,7 +107,7 @@ function ssh () {
   command ssh $options $remote 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash $ssh_command"'
 }
 
-function iptables-off () {
+iptables-off() {
   sudo iptables -X
   sudo iptables -F
   sudo iptables -P FORWARD ACCEPT
@@ -115,7 +115,7 @@ function iptables-off () {
   sudo iptables -P OUTPUT ACCEPT
 }
 
-function gpp () {
+gpp() {
   if g++ -o "${1%.*}.out" "$1"; then
     ./"${1%.*}.out"
   fi
@@ -172,7 +172,7 @@ EOF
   fi
 }
 
-function backup-chromium () {
+backup-chromium() {
   local backups; local num_of_backups; local num_backups_to_delete
 
   for d in ~/bkp/chromium*; do
@@ -194,7 +194,7 @@ function backup-chromium () {
   cp -a ~/.config/chromium ~/bkp/chromium_$(date +%F_%H:%M)
 }
 
-function backup-firefox () {
+backup-firefox() {
   local backups; local num_of_backups; local num_backups_to_delete
 
   for d in ~/bkp/mozilla*; do
@@ -216,7 +216,7 @@ function backup-firefox () {
   cp -a .mozilla bkp/mozilla_$(date +%F_%H:%M)
 }
 
-function sync-keepass-passwords () {
+sync-keepass-passwords() {
   while IFS= read -r -d $'\0'; do
     dbFiles+=("$REPLY")
   done < <(find /run/media/$USER -iname casual.kdbx -print0)
