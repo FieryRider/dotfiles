@@ -65,15 +65,15 @@ if $release_arch; then
     command ssh ivailo@server "sudo poweroff"
   }
 
-function mount-encr () {
-  sudo cryptsetup --type luks open /dev/sdb4 encr;
-  sudo mount /dev/mapper/encr /mnt/encr/
-}
+  function mount-encr () {
+    sudo cryptsetup --type luks open /dev/sdb4 encr;
+    sudo mount /dev/mapper/encr /mnt/encr/
+  }
 
-function umount-encr () {
-  sudo umount /mnt/encr/;
-  sudo cryptsetup close /dev/mapper/encr;
-}
+  function umount-encr () {
+    sudo umount /mnt/encr/;
+    sudo cryptsetup close /dev/mapper/encr;
+  }
 
 function gpu-vfio () {
   sudo mv /etc/modprobe.d/vfio.conf.bak /etc/modprobe.d/vfio.conf
