@@ -60,19 +60,19 @@ fi
 
 if $release_arch; then
   sdserver() {
-    sudo umount -R /mnt/server/*;
-    sudo umount -R /mnt/server;
+    sudo umount -R /mnt/server/*
+    sudo umount -R /mnt/server
     command ssh ivailo@server "sudo poweroff"
   }
 
   mount-encr() {
-    sudo cryptsetup --type luks open /dev/sdb4 encr;
+    sudo cryptsetup --type luks open /dev/sdb4 encr
     sudo mount /dev/mapper/encr /mnt/encr/
   }
 
   umount-encr() {
-    sudo umount /mnt/encr/;
-    sudo cryptsetup close /dev/mapper/encr;
+    sudo umount /mnt/encr/
+    sudo cryptsetup close /dev/mapper/encr
   }
 fi
 
