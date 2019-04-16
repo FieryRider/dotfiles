@@ -174,7 +174,7 @@ let mapleader = "\\"
 nn ; :
 nn : ;
 nn <c-p> :call UpByIndent()<cr>
-nn <Leader>n :NERDTree<CR>
+nn <Leader>e :Explore<CR>
 nn <Leader>f :FufFile<CR>
 nn go o<ESC>k
 nn gO O<ESC>j
