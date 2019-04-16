@@ -80,6 +80,16 @@ if $release_arch; then
     sudo umount /mnt/encr/
     sudo cryptsetup close /dev/mapper/encr
   }
+
+  gpu-vfio () {
+    sudo mv /etc/modprobe.d/vfio.conf.bak /etc/modprobe.d/vfio.conf
+    sudo mv /etc/modules-load.d/vfio.conf.bak /etc/modules-load.d/vfio.conf
+  }
+
+  gpu-nvidia () {
+    sudo mv /etc/modprobe.d/vfio.conf /etc/modprobe.d/vfio.conf.bak
+    sudo mv /etc/modules-load.d/vfio.conf /etc/modules-load.d/vfio.conf.bak
+  }
 fi
 
 if $release_debian || $release_ubuntu ; then
