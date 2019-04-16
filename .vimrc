@@ -178,11 +178,10 @@ nn <Leader>e :Explore<CR>
 nn <Leader>f :FufFile<CR>
 nn go o<ESC>k
 nn gO O<ESC>j
-"ino ' ''<ESC>i
-"ino " ""<ESC>i
-"ino ( ()<ESC>i
-"ino { {<ESC>o}<ESC>O
-"ino [ []<ESC>i
+nn <leader>t :tabnew<CR>
+nn <leader>w :tabclose<CR>
+nn gn :tabnext<CR>
+nn gp :tabprev<CR>
 "ino <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
 vno < <gv " selection remains after indenting
 vno > >gv " selection remains after indenting
