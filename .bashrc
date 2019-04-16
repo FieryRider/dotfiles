@@ -65,6 +65,12 @@ if $release_arch; then
     command ssh ivailo@server "sudo poweroff"
   }
 
+  reboot-server() {
+    sudo umount -R /mnt/server/*
+    sudo umount -R /mnt/server
+    command ssh ivailo@server "sudo reboot"
+  }
+
   mount-encr() {
     sudo cryptsetup --type luks open /dev/sdb4 encr
     sudo mount /dev/mapper/encr /mnt/encr/
