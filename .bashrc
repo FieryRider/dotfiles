@@ -123,6 +123,13 @@ ssh() {
   command ssh $options $remote 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash $ssh_command"'
 }
 
+start-ssh-agent() {
+  export SSH_AUTH_SOCK=/tmp/ssh-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12)/agent.6995
+  export SSH_AGENT_PID=6996
+  eval $(ssh-agent)
+  ssh-add
+}
+
 iptables-off() {
   sudo iptables -X
   sudo iptables -F
