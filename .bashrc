@@ -124,8 +124,6 @@ ssh() {
 }
 
 start-ssh-agent() {
-  export SSH_AUTH_SOCK=/tmp/ssh-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12)/agent.6995
-  export SSH_AGENT_PID=6996
   eval $(ssh-agent)
   ssh-add
 }
