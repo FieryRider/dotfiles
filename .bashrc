@@ -203,10 +203,7 @@ backup-chromium() {
 
   if [[ $num_of_backups -gt 7 ]]; then
     num_backups_to_delete=$(( $num_of_backups - 7 ))
-    while [[ $num_backups_to_delete -gt 0 ]]; do
-      rm -r "${backups[0]}"
-      (( num_backups_to_delete-- ))
-    done
+    rm -r ${backups[@]:0:num_backups_to_delete}
   fi
 
   while pgrep chromium; do
@@ -225,10 +222,7 @@ backup-firefox() {
 
   if [[ $num_of_backups -gt 7 ]]; then
     num_backups_to_delete=$(( $num_of_backups - 7 ))
-    while [[ $num_backups_to_delete -gt 0 ]]; do
-      rm -r "${backups[0]}"
-      (( num_backups_to_delete-- ))
-    done
+    rm -r ${backups[@]:0:num_backups_to_delete}
   fi
 
   while pgrep firefox; do
