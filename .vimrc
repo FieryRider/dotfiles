@@ -189,6 +189,11 @@ nn <leader>w :tabclose<CR>
 nn gn :tabnext<CR>
 nn gp :tabprev<CR>
 "ino <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
-vno < <gv " selection remains after indenting
-vno > >gv " selection remains after indenting
+"selection remains after indenting
+vno < <gv
+vno > >gv
+"alt+,  move to prev line of same identation
+nn g, :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+"alt+.  move to next line of same identation
+nn g. :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 """""End Remaps"""""
