@@ -81,12 +81,20 @@ if $release_arch; then
     sudo cryptsetup close /dev/mapper/encr
   }
 
-  gpu-vfio () {
+  which-gpu() {
+    if [[ -f /etc/modprobe.d/vfio.conf ]]; then
+      echo 'VFIO'
+    else
+      echo 'NVIDIA'
+    fi
+  }
+
+  gpu-vfio() {
     sudo mv /etc/modprobe.d/vfio.conf.bak /etc/modprobe.d/vfio.conf
     sudo mv /etc/modules-load.d/vfio.conf.bak /etc/modules-load.d/vfio.conf
   }
 
-  gpu-nvidia () {
+  gpu-nvidia() {
     sudo mv /etc/modprobe.d/vfio.conf /etc/modprobe.d/vfio.conf.bak
     sudo mv /etc/modules-load.d/vfio.conf /etc/modules-load.d/vfio.conf.bak
   }
