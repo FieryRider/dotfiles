@@ -30,6 +30,7 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# set TERM_EMU env var which is read by .vimrc in order to set the right cursor shape for the terminal emulator in use
 if [ ! -v TERM_EMU ]; then
   TERM_EMU=$(ps -o comm= $(ps -o ppid= $$))
 fi
@@ -126,8 +127,12 @@ iptables-off() {
 }
 
 gpp() {
-  if g++ -o "${1%.*}.out" "$1"; then
-    ./"${1%.*}.out"
+  if [[ -n $1 ]]; then
+    if g++ -o "${1%.*}.out" "$1"; then
+      ./"${1%.*}.out"
+    fi
+  else
+    echo 'Usage: gpp FILE.cpp'
   fi
 }
 
