@@ -246,8 +246,3 @@ sync-keepass-passwords() {
 ##### End Functions #####
 
 PATH=$PATH:~/.android/platform-tools/:~/.android/tools/
-HISTSIZE=4000
-HISTFILESIZE=4000
-HISTTIMEFORMAT="%d/%m/%y %T "
-HISTIGNORE=':vi .bash_history:vi ~/.bash_history:set +o history:'
-HISTCONTROL=ignoreboth

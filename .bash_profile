@@ -2,6 +2,10 @@
 # ~/.bash_profile
 #
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+export HISTTIMEFORMAT='%d/%m/%y %T '
+export HISTSIZE=4000
+export HISTFILESIZE=4000
+export HISTIGNORE=':vi .bash_history:vi ~/.bash_history:set +o history:'
+export HISTCONTROL=ignoreboth
 
-export HISTTIMEFORMAT="%d/%m/%y %T "
+[[ -f ~/.bashrc ]] && . ~/.bashrc
