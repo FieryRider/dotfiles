@@ -8,6 +8,7 @@
 
 PS1='[\[\e[33;1m\]\u@\h:\[\e[01;34m\]\w\[\e[0m\]]\$ '
 
+umask 0027
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
