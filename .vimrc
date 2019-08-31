@@ -68,12 +68,12 @@ set encoding=utf-8
 
 "@return pid: String: Parent PID of the given PID
 function! GetPPID(pid)
-	return system('echo $(ps -o ppid= '. a:pid .')')
+  return system('echo $(ps -o ppid= '. a:pid .')')
 endfunction
 
 "@param pid: String: PID of the program
 function! GetProgramName(pid)
-	return system('echo $(ps -o comm= '. a:pid .')')
+  return system('echo $(ps -o comm= '. a:pid .')')
 endfunction
 
 "Sets different cursor in normal/insert mode
@@ -129,12 +129,12 @@ elseif TERM_EMU =~ 'konsole'
     " 0 -> block
     " 1 -> vertical line
     " 2 -> underscore
-    endif
+  endif
 endif
 
-set hlsearch	"highlights search results
-hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white	"adjust cursor color
-set cul 	"highlights current line
+set hlsearch    "highlights search results
+hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      "adjust cursor color
+set cul         "highlights current line
 
 "Set in their own .vim files
 "autocmd Filetype html setlocal ts=4 sts=4 sw=4
