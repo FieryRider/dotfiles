@@ -8,19 +8,6 @@
 
 PS1='[\[\e[33;1m\]\u@\h:\[\e[01;34m\]\w\[\e[0m\]]\$ '
 
-####### Alias definitions. #######
-alias sudo='sudo '
-alias ls='ls --color=auto'
-alias ll='ls -hl'
-alias la='ls -a'
-alias lla='ls -ahl'
-alias vi='vim'
-alias bell='aplay ~/Music/chime.wav'
-alias ffmpeg='ffmpeg -hide_banner'
-alias ffprobe='ffprobe -hide_banner'
-alias start-win10="systemctl --user restart synergys && virsh -c 'qemu:///system' start Windows10"
-alias kdeshutdown='qdbus org.kde.ksmserver /KSMServer logout 0 2 1' # https://api.kde.org/4.x-api/kde-workspace-apidocs/plasma-workspace/html/namespaceKWorkSpace.html#a0c75f4db070a83b47f0bfc5026383aeb
-alias kderestart='qdbus org.kde.ksmserver /KSMServer logout 0 1 1'
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
