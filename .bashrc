@@ -222,24 +222,7 @@ backup-firefox() {
   while pgrep firefox; do
     sleep 4
   done
-  cp -a .mozilla bkp/mozilla_$(date +%F_%H:%M)
-}
-
-sync-keepass-passwords() {
-  while IFS= read -r -d $'\0'; do
-    dbFiles+=("$REPLY")
-  done < <(find /run/media/$USER -iname casual.kdbx -print0)
-
-  newestDB="${dbFiles[0]}"
-  for x in "${dbFiles[@]}"; do
-    [[ "$x" -ot "$newestDB" ]] || newestDB="$x"
-  done
-
-  for x in "${dbFiles[@]}"; do
-    if [[ "$newestDB" != "$x" ]]; then
-      cp "$newestDB" "$x"
-    fi
-  done
+  cp -a ~/.mozilla ~/bkp/mozilla_$(date +%F_%H:%M)
 }
 
 ##### End Functions #####
