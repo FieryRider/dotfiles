@@ -20,12 +20,6 @@ if [ "$PS1" ]; then
   complete -cf sudo
 fi
 
-####### Exports #######
-export EDITOR=vim
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-##### End Exports #####
-
 # append to the history file, don't overwrite it / combine histories from all terminal sessions
 shopt -s histappend
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
