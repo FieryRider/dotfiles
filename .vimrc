@@ -136,6 +136,7 @@ set hlsearch    "highlights search results
 hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      "adjust cursor color
 set cul         "highlights current line
 
+autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
 "Set in their own .vim files
 "autocmd Filetype html setlocal ts=4 sts=4 sw=4
 "autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
