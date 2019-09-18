@@ -1,60 +1,47 @@
-if !empty(glob('~/.vim/bundle/Vundle.vim'))
-  """"""""""""Vundle Init""""""""""
-  set nocompatible              " be iMproved, required
-  filetype off                  " required
-
-  " set the runtime path to include Vundle and initialize
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
-  " alternatively, pass a path where Vundle should install plugins
-  "call vundle#begin('~/some/path/here')
-
-  " let Vundle manage Vundle, required
-  Plugin 'VundleVim/Vundle.vim'
-  Plugin 'vim-scripts/L9'
-
-  """""""""""End Vundle Init"""""""""""
-
-  """""""""""Snipmate"""""""""""""
-  Plugin 'MarcWeber/vim-addon-mw-utils'
-  Plugin 'tomtom/tlib_vim'
-  Plugin 'garbas/vim-snipmate'
-
-  " Optional:
-  Plugin 'honza/vim-snippets'
-
-  """""""""End SnipMate""""""""""""
-
-  Bundle 'tpope/vim-surround'
-  Bundle 'vim-scripts/FuzzyFinder'
-  Bundle 'tomtom/tcomment_vim'
-  Bundle 'kana/vim-smartinput'
-
-  """""Advanced fuzzy-finder"""""""
-  "Bundle 'Shougo/unite.vim'
-  ""Required for some of the functionality of unite.vim
-  "Bundle 'Shougo/vimproc'
-  """End Advanced fuzzy-finder"""""
-
-  " All of your Plugins must be added before the following line
-  call vundle#end()            " required
-
-  filetype plugin indent on    " required
-  " To ignore plugin indent changes, instead use:
-  "filetype plugin on
-  "
-  " Brief help
-  " :PluginList       - lists configured plugins
-  " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-  " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-  " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-  "
-  " see :h vundle for more details or wiki for FAQ
-  " Put your non-Plugin stuff after this line
-  "
-  " """""""""""""""""End Vundle"""""""""""""""""""""
-  " """"""""""""""""""""""""""""""""""""""""""""""""
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
+call plug#begin()
+Plug 'vim-scripts/L9'
+"""""""""""Snipmate"""""""""""""
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+
+" Optional:
+Plug 'honza/vim-snippets'
+
+"""""""""End SnipMate""""""""""""
+
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/FuzzyFinder'
+Plug 'tomtom/tcomment_vim'
+Plug 'kana/vim-smartinput'
+
+"""Advanced fuzzy-finder"""
+"Plug 'Shougo/unite.vim'
+""Required for some of the functionality of unite.vim
+"Plug 'Shougo/vimproc'
+"""End Advanced fuzzy-finder"""
+
+"""Markdown"""
+Plug 'godlygeek/tabular', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+"""End Markdown"""
+
+"""C++"""
+Plug 'rip-rip/clang_complete', { 'for': 'cpp' }
+"""End C++""""
+
+"""PHP"""
+Plug 'ervandew/supertab', { 'for': 'php' }
+Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
+"""End PHP"""
+
+call plug#end()
 
 "Disable mouse support (This was the default setting in previous versions)
 set mouse=
