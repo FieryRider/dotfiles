@@ -64,11 +64,7 @@ if $release_arch; then
   }
 
   which-gpu() {
-    if [[ -f /etc/modprobe.d/vfio.conf ]]; then
-      echo 'VFIO'
-    else
-      echo 'NVIDIA'
-    fi
+    lspci -d 10de:13c2 -k | grep -Po '(?<=Kernel driver in use: ).*'
   }
 
   gpu-vfio() {
