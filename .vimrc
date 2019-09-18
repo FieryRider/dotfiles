@@ -29,10 +29,13 @@ if !empty(glob('~/.vim/bundle/Vundle.vim'))
   Bundle 'vim-scripts/FuzzyFinder'
   Bundle 'tomtom/tcomment_vim'
   Bundle 'kana/vim-smartinput'
+
+  """""Advanced fuzzy-finder"""""""
+  "Bundle 'Shougo/unite.vim'
   ""Required for some of the functionality of unite.vim
   "Bundle 'Shougo/vimproc'
-  ""Advanced fuzzy-finder
-  "Bundle 'Shougo/unite.vim'
+  """End Advanced fuzzy-finder"""""
+
   " All of your Plugins must be added before the following line
   call vundle#end()            " required
 
@@ -140,10 +143,6 @@ hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      
 set cul         "highlights current line
 
 autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
-"Set in their own .vim files
-"autocmd Filetype html setlocal ts=4 sts=4 sw=4
-"autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-"autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 
 """""""Fuctions"""""""
 fun! UpByIndent()
