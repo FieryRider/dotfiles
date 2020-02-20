@@ -138,12 +138,25 @@ iptables-off() {
 }
 
 gpp() {
-  if [[ -n $1 ]]; then
-    if g++ -o "${1%.*}.out" "$1"; then
-      ./"${1%.*}.out"
-    fi
-  else
-    echo 'Usage: gpp FILE.cpp'
+  if [[ -z $1 ]]; then
+    echo 'Usage: gpp [options...] FILE.cpp'
+    return 1
+  fi
+
+  src_file_path="${@: -1}"
+  exe_file_path="${src_file_path%.cpp}"
+  options="${@:1:$#-1}"
+  execute=true
+
+  if [[ "$options" = *'--no-exec'* ]]; then
+    execute=false
+    options="${options/--no-exec/}"
+  fi
+  if ! g++ $options -o "$exe_file_path" "$src_file_path"; then
+    return 1
+  fi
+  if [[ $execute = 'true' ]]; then
+    ./"$exe_file_path"
   fi
 }
 
