@@ -20,6 +20,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/FuzzyFinder'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-smartinput'
+Plug 'alvan/vim-closetag', {'for': ['xml', 'html']}
 
 """Advanced fuzzy-finder"""
 "Plug 'Shougo/unite.vim'
@@ -30,6 +31,7 @@ Plug 'kana/vim-smartinput'
 """Markdown"""
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'markdown' }
 """End Markdown"""
 
 """C++"""
@@ -37,6 +39,8 @@ Plug 'rip-rip/clang_complete', { 'for': 'cpp' }
 """End C++""""
 
 """PHP"""
+Plug 'Shougo/vimproc', { 'for': 'php' }
+Plug 'Shougo/unite.vim', { 'for': 'php' }
 Plug 'ervandew/supertab', { 'for': 'php' }
 Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
 """End PHP"""
