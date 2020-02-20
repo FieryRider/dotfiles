@@ -13,3 +13,4 @@ alias start-win10="systemctl --user restart synergys && virsh -c 'qemu:///system
 alias kdeshutdown='qdbus org.kde.ksmserver /KSMServer logout 0 2 1' # https://api.kde.org/4.x-api/kde-workspace-apidocs/plasma-workspace/html/namespaceKWorkSpace.html#a0c75f4db070a83b47f0bfc5026383aeb
 alias kderestart='qdbus org.kde.ksmserver /KSMServer logout 0 1 1'
 alias dotnet='TERM=xterm dotnet'
+alias rvim='vim -R'
