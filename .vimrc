@@ -186,8 +186,8 @@ nn gp :tabprev<CR>
 "selection remains after indenting
 vno < <gv
 vno > >gv
-"alt+,  move to prev line of same identation
+"g+,  move to prev line of same identation
 nn g, :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
-"alt+.  move to next line of same identation
+"g+.  move to next line of same identation
 nn g. :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 """""End Remaps"""""
