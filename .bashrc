@@ -64,7 +64,7 @@ if $release_arch; then
   }
 
   which-gpu() {
-    lspci -d 10de:13c2 -k | grep -Po '(?<=Kernel driver in use: ).*'
+    lspci -d 10de:13c2 -k | command grep -Po '(?<=Kernel driver in use: ).*'
   }
 
   gpu-vfio() {
@@ -148,14 +148,14 @@ gpp() {
 }
 
 mednafen() {
-  args="${@:1:$(($#-1))}"
+  args="${@:1:$#-1}"
   file="${@: -1}"
   if [[ "$file" =~ .*\.7z ]]; then
     file_name=$(basename "$file")
     game_name=${file_name%*.7z}
     7z x -o/tmp/"$game_name" "$file"
 
-    # If there isn't a .cue file, pick one from EU .cue files collection or create one
+# If there isn't a .cue file, pick one from EU .cue files collection or create one
     if ! ls /tmp/"$game_name"/*.cue > /dev/null 2>&1; then
       cue_file=$(find $PSX_GAMES/ -name "$game_name.cue" -print -quit)
       if [[ -z "$cue_file" ]]; then
@@ -191,10 +191,10 @@ EOF
       fi
     fi
 
-    command mednafen /tmp/"$game_name"/*.cue
-    rm -r /tmp/"$game_name"
+  command mednafen $args /tmp/"$game_name"/*.cue
+  rm -r /tmp/"$game_name"
   elif [[ "$file"  =~ .*\.cue ]]; then
-    command mednafen "$args" "$file"
+    command mednafen $args "$file"
   fi
 }
 
@@ -220,7 +220,7 @@ backup-chromium() {
 backup-firefox() {
   local backups; local num_of_backups; local num_backups_to_delete
 
-  for d in ~/bkp/mozilla*; do
+  for d in ~/bkp/mozilla_*; do
     backups+=($d)
   done
   num_of_backups=${#backups[@]}
