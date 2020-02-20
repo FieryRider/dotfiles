@@ -89,24 +89,39 @@ if $release_debian || $release_ubuntu ; then
 fi
 
 ssh() {
-  local remote; local options; local ssh_command; local remote_added=false
+  local remote; local options; local ssh_command; local remote_added=false; local opt_val=false
 
   for arg in "$@"; do
-    if [[ $arg = *"@"* ]]; then
+    if [[ $opt_val = true ]]; then
+      options+="$arg "
+      opt_val=false
+      continue
+    elif [[ $arg =~ -(B|b|c|D|E|e|F|I|i|J|L|l|m|O|o|p|Q|R|S|W|w) ]]; then
+      options+="$arg "
+      opt_val=true
+      continue
+    elif [[ $arg =~ -.* ]]; then
+      options+="$arg "
+      continue
+    fi
+
+    if [[ $remote_added = false ]]; then
       remote="$arg"
       remote_added=true
-    else
-      if [[ "$remote_added" = true ]]; then
-        ssh_command="$arg"
-      else
-        if [[ "$arg" != "-t" ]]; then
-          options+="$arg "
-        fi
-      fi
+      continue
     fi
+    ssh_command+="$arg"
   done
-  options+="-t"
-  command ssh $options $remote 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash $ssh_command"'
+  if [[ -n "$ssh_command" ]]; then
+    if [[ "$ssh_command" =~ ^vim?[[:space:]].* ]]; then
+      command ssh $options -t $remote "export TERM_EMU=$TERM_EMU; $command"
+    else
+      command ssh $options -t $remote "$ssh_command"
+    fi
+  else
+      command ssh $options -t $remote "export TERM_EMU=$TERM_EMU; bash -l"
+  fi
+  #command ssh $options $remote 'bash -l -c "export TERM_EMU='$TERM_EMU'; bash $ssh_command"'
 }
 
 start-ssh-agent() {
