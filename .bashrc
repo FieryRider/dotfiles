@@ -143,6 +143,21 @@ iptables-off() {
   sudo iptables -P OUTPUT ACCEPT
 }
 
+upgrade-python-venv() {
+for environment in ~/.python_env*; do
+    source $environment/bin/activate
+    pip3 freeze --local > /tmp/python_venv_req
+    deactivate
+    python -m venv --upgrade $environment
+    source $environment/bin/activate
+    echo "Upgraded $environment."
+    diff /tmp/python_venv_req <(pip3 freeze --local)
+    echo '----------------------'
+    deactivate
+    rm /tmp/python_venv_req
+done
+}
+
 gpp() {
   if [[ -z $1 ]]; then
     echo 'Usage: gpp [options...] FILE.cpp'
