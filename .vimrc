@@ -155,6 +155,8 @@ endfun
 """""End Functions"""""
 
 """""""Remaps"""""""
+let mapleader = "\\"
+
 no <down> <Nop>
 no <up> <Nop>
 no <left> <Nop>
@@ -165,12 +167,12 @@ ino <up> <Nop>
 ino <left> <Nop>
 ino <right> <Nop>
 
-vno <down> <Nop>
-vno <up> <Nop>
-vno <left> <Nop>
-vno <right> <Nop>
+vn <down> <Nop>
+vn <up> <Nop>
+vn <left> <Nop>
+vn <right> <Nop>
 
-let mapleader = "\\"
+nn <s-k> <Nop>
 nn ; :
 nn : ;
 nn <c-p> :call UpByIndent()<cr>
@@ -184,8 +186,8 @@ nn gn :tabnext<CR>
 nn gp :tabprev<CR>
 "ino <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
 "selection remains after indenting
-vno < <gv
-vno > >gv
+vn < <gv
+vn > >gv
 "g+,  move to prev line of same identation
 nn g, :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
 "g+.  move to next line of same identation
