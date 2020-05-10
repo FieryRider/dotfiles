@@ -47,6 +47,7 @@ Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
 
 call plug#end()
 
+set viminfo='100,<500,s100,h
 "Disable mouse support (This was the default setting in previous versions)
 set mouse=
 
