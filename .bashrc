@@ -270,6 +270,11 @@ backup-firefox() {
   cp -a ~/.mozilla ~/bkp/mozilla_$(date +%F_%H:%M)
 }
 
+reload-conkyrc() {
+    sed -i 's/ / /' code/git/dotfiles/.conkyrc1
+    sed -i 's/ / /' code/git/dotfiles/.conkyrc2
+}
+
 ##### End Functions #####
 
 PATH=$PATH:~/.android/platform-tools/:~/.android/tools/
