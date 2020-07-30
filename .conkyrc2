@@ -39,7 +39,7 @@ ${font Ubuntu mono:pixelsize=20,weight:Bold}System Info${font} ${hr 2 }
 ${color #55aaff}$nodename${color} - $sysname $kernel
 ${color #55aaff}Uptime:${color} $uptime
 ${color #55aaff}Load:${color} $loadavg
-${color #55aaff}GPU: ${color}${exec lspci -d 10de:13c2 -k | command grep -Po '(?<=Kernel driver in use: ).*'}
+${color #55aaff}GPU: ${color}${exec lspci -d 10de:13c2 -k | command grep -Po '(?<=Kernel driver in use: ).*'} (${exec loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type | grep -Po '(?<=Type=).*'})
 
 ${font Ubuntu mono:pixelsize=20,weight:Bold}CPU${font} ${hr 2}
 
