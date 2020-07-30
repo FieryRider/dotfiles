@@ -22,7 +22,9 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/FuzzyFinder'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-smartinput'
+Plug 'vim-scripts/AutoComplPop'
 Plug 'alvan/vim-closetag', {'for': ['xml', 'html']}
+Plug 'mattn/emmet-vim', {'for': ['html']}
 
 """Advanced fuzzy-finder"""
 "Plug 'Shougo/unite.vim'
@@ -73,6 +75,24 @@ autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
 
 "Remove auto wrapping of comments
 autocmd FileType * set formatoptions-=c
+
+"{{{ Autocomplete settings
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" open omni completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+" open user completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+
+"}}}
 
 " {{{ Find related options
 "Append all files in the current project to the path so they can be searched with find

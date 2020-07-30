@@ -14,3 +14,5 @@ nn <leader>c :exe ':silent !chromium % &'<CR>
 
 "inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 "inoremap <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
+
+let g:user_emmet_expandabbr_key = '<C-a>'
