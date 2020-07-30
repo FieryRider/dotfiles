@@ -71,6 +71,20 @@ set encoding=utf-8
 
 autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
 
+"Remove auto wrapping of comments
+autocmd FileType * set formatoptions-=c
+
+" {{{ Find related options
+"Append all files in the current project to the path so they can be searched with find
+set path+=**
+"Bar on top displaying available file when tabbing through file with commands like :e and also enables wild globbing with :find
+set wildmenu
+"Ignore `node_modules` dir because it can slow `find` command a lot
+set wildignore+=**/node_modules/**
+
+set incsearch
+" }}}
+
 " {{{ Highlight settings
 set hlsearch    "highlights search results
 hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      "adjust cursor color
