@@ -1,3 +1,5 @@
+" vim::foldmethod=marker:foldmarker={{{,}}}
+" {{{ Plug setup
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -46,7 +48,9 @@ Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
 """End PHP"""
 
 call plug#end()
+" }}}
 
+" {{{ Standart config
 set viminfo='100,<500,s100,h
 "Disable mouse support (This was the default setting in previous versions)
 set mouse=
@@ -63,7 +67,17 @@ filetype indent on
 
 set fileformat=unix
 set encoding=utf-8
+" }}}
 
+autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
+
+" {{{ Highlight settings
+set hlsearch    "highlights search results
+hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      "adjust cursor color
+set cul         "highlights current line
+" }}}
+
+" {{{ Cursor config
 "@return pid: String: Parent PID of the given PID
 function! GetPPID(pid)
   return system('echo $(ps -o ppid= '. a:pid .')')
@@ -129,14 +143,9 @@ elseif TERM_EMU =~ 'konsole'
     " 2 -> underscore
   endif
 endif
+" }}}
 
-set hlsearch    "highlights search results
-hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      "adjust cursor color
-set cul         "highlights current line
-
-autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
-
-"""""""Fuctions"""""""
+" {{{ Functions
 fun! UpByIndent()
   norm! ^
   let start_col = col(".")
@@ -152,10 +161,9 @@ fun! UpByIndent()
     endif
   endwhile
 endfun
+" }}}
 
-"""""End Functions"""""
-
-"""""""Remaps"""""""
+" {{{ Remaps
 let mapleader = "\\"
 
 no <down> <Nop>
@@ -193,4 +201,4 @@ vn > >gv
 nn g, :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
 "g+.  move to next line of same identation
 nn g. :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
-"""""End Remaps"""""
+" }}}
