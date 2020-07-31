@@ -18,6 +18,7 @@ Plug 'honza/vim-snippets'
 " }}}
 
 
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/FuzzyFinder'
 Plug 'tomtom/tcomment_vim'
