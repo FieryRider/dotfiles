@@ -8,15 +8,15 @@ endif
 
 call plug#begin()
 Plug 'vim-scripts/L9'
-"""""""""""Snipmate"""""""""""""
+" {{{ Snipmate
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
 
 " Optional:
 Plug 'honza/vim-snippets'
+" }}}
 
-"""""""""End SnipMate""""""""""""
 
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/FuzzyFinder'
@@ -26,28 +26,28 @@ Plug 'vim-scripts/AutoComplPop'
 Plug 'alvan/vim-closetag', {'for': ['xml', 'html']}
 Plug 'mattn/emmet-vim', {'for': ['html']}
 
-"""Advanced fuzzy-finder"""
+" {{{ Advanced fuzzy-finder
 "Plug 'Shougo/unite.vim'
 ""Required for some of the functionality of unite.vim
 "Plug 'Shougo/vimproc'
-"""End Advanced fuzzy-finder"""
+" }}}
 
-"""Markdown"""
+"{{{ Markdown
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'markdown' }
-"""End Markdown"""
+"}}}
 
-"""C++"""
+"{{{ C++
 Plug 'rip-rip/clang_complete', { 'for': 'cpp' }
-"""End C++""""
+"}}}
 
-"""PHP"""
+"{{{ PHP
 Plug 'Shougo/vimproc', { 'for': 'php' }
 Plug 'Shougo/unite.vim', { 'for': 'php' }
 Plug 'ervandew/supertab', { 'for': 'php' }
 Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
-"""End PHP"""
+"}}}
 
 call plug#end()
 " }}}
