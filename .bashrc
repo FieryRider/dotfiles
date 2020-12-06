@@ -273,8 +273,13 @@ backup-firefox() {
 }
 
 reload-conkyrc() {
-    sed -i 's/ / /' code/git/dotfiles/.conkyrc1
-    sed -i 's/ / /' code/git/dotfiles/.conkyrc2
+  sed -i 's/ / /' code/git/dotfiles/.conkyrc1
+  sed -i 's/ / /' code/git/dotfiles/.conkyrc2
+}
+
+unzipd() {
+  output_folder=${1%%.zip}
+  unzip -d "$output_folder" "$1"
 }
 
 ##### End Functions #####
