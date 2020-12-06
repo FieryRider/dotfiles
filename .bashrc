@@ -289,4 +289,4 @@ unzipd() {
 
 ##### End Functions #####
 
-PATH=$PATH:~/.android/platform-tools/:~/.android/tools/
+PATH=$PATH:~/.android/platform-tools/:~/.android/tools/:~/.android/tools/bin/:~/.local/share/npm/bin/:
