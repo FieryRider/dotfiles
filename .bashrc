@@ -266,7 +266,7 @@ backup-firefox() {
     rm -r ${backups[@]:0:num_backups_to_delete}
   fi
 
-  while pgrep firefox; do
+  while [[ -n $(pidof firefox) ]]; do
     sleep 4
   done
   cp -a ~/.mozilla ~/bkp/mozilla_$(date +%F_%H:%M)
