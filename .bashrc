@@ -70,6 +70,7 @@ if $release_arch; then
   gpu-vfio() {
     sudo mv /etc/modprobe.d/vfio.conf.bak /etc/modprobe.d/vfio.conf
     sudo mv /etc/modules-load.d/vfio.conf.bak /etc/modules-load.d/vfio.conf
+    sudo mv /etc/X11/xorg.conf /etc/X11/xorg.conf.bak
     sudo sed -i 's/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/#MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo sed -i 's/#MODULES=(i915)/MODULES=(i915)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -p linux
@@ -78,6 +79,7 @@ if $release_arch; then
   gpu-nvidia() {
     sudo mv /etc/modprobe.d/vfio.conf /etc/modprobe.d/vfio.conf.bak
     sudo mv /etc/modules-load.d/vfio.conf /etc/modules-load.d/vfio.conf.bak
+    sudo mv /etc/X11/xorg.conf.bak /etc/X11/xorg.conf
     sudo sed -i 's/#MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo sed -i 's/MODULES=(i915)/#MODULES=(i915)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -p linux
