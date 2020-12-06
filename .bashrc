@@ -84,6 +84,11 @@ if $release_arch; then
     sudo sed -i 's/MODULES=(i915)/#MODULES=(i915)/' /etc/mkinitcpio.conf
     sudo mkinitcpio -p linux
   }
+
+  kill-ts3() {
+    pkill teamspeak3
+    pkill ts3client
+  }
 fi
 
 if $release_debian || $release_ubuntu ; then
