@@ -7,35 +7,39 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'vim-scripts/L9'
 " {{{ Snipmate
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'garbas/vim-snipmate'
-
-" Optional:
-Plug 'honza/vim-snippets'
+"Plug 'MarcWeber/vim-addon-mw-utils'
+"Plug 'tomtom/tlib_vim'
+"Plug 'garbas/vim-snipmate'
+"
+"" Optional:
+"Plug 'honza/vim-snippets'
 " }}}
 
-
+"Plug 'vim-scripts/L9'
+"Plug 'vim-scripts/FuzzyFinder'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/FuzzyFinder'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-smartinput'
-Plug 'vim-scripts/AutoComplPop'
 Plug 'alvan/vim-closetag', {'for': ['xml', 'html']}
-Plug 'mattn/emmet-vim', {'for': ['html']}
+Plug 'mattn/emmet-vim', {'for': ['html', 'html.handlebars']}
+"Plug 'othree/vim-autocomplpop'
+Plug 'vim-scripts/dbext.vim', {'for': ['sql']}
+Plug 'pangloss/vim-javascript', {'for': ['javascript']}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['javascript']}
+Plug 'mustache/vim-mustache-handlebars', {'for': ['html.handlebars']}
+Plug 'maksimr/vim-jsbeautify', {'for': ['javascript']}
 
-" {{{ Advanced fuzzy-finder
-"Plug 'Shougo/unite.vim'
-""Required for some of the functionality of unite.vim
-"Plug 'Shougo/vimproc'
+" {{{ Denite.vim
+Plug 'Shougo/denite.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 " }}}
 
 "{{{ Markdown
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'markdown' }
 "}}}
 
@@ -44,8 +48,6 @@ Plug 'rip-rip/clang_complete', { 'for': 'cpp' }
 "}}}
 
 "{{{ PHP
-Plug 'Shougo/vimproc', { 'for': 'php' }
-Plug 'Shougo/unite.vim', { 'for': 'php' }
 Plug 'ervandew/supertab', { 'for': 'php' }
 Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
 "}}}
@@ -236,4 +238,7 @@ vn > >gv
 nn g, :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
 "g+.  move to next line of same identation
 nn g. :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+"Same mappings as above but for visual mode
+vn g, <Esc>:call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>m'gv''
+vn g. <Esc>:call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>m'gv''
 " }}}
