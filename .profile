@@ -27,4 +27,3 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export QT_STYLE_OVERRIDE=kvantum
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-export PYTHONPATH='/home/ivailo/.python_env/lib/python3.8:/home/ivailo/.python_env/lib/python3.8/site-packages:/usr/lib/python3.8:/usr/lib/python3.8/site-packages'
