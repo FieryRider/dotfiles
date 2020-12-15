@@ -277,11 +277,6 @@ backup-firefox() {
   cp -a ~/.mozilla ~/bkp/mozilla_$(date +%F_%H:%M)
 }
 
-reload-conkyrc() {
-  sed -i 's/ / /' code/git/dotfiles/.conkyrc1
-  sed -i 's/ / /' code/git/dotfiles/.conkyrc2
-}
-
 unzipd() {
   output_folder=${1%%.zip}
   unzip -d "$output_folder" "$1"

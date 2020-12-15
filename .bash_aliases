@@ -15,3 +15,4 @@ alias kdeshutdown='qdbus org.kde.ksmserver /KSMServer logout 0 2 1' # https://ap
 alias kderestart='qdbus org.kde.ksmserver /KSMServer logout 0 1 1'
 alias dotnet='TERM=xterm dotnet'
 alias rvim='vim -R'
+alias reload-conkyrc='killall -SIGUSR1 conky'
