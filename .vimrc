@@ -30,6 +30,10 @@ Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['javascript', 'python', 'html.handlebars'] }
 "Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' }
+"Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+"Plug 'vim-python/python-syntax', { 'for': 'python' }
+Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
+"Plug 'posva/vim-vue'
 
 " {{{ Denite.vim
 Plug 'Shougo/denite.nvim'
