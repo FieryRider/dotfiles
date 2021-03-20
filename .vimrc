@@ -80,21 +80,10 @@ autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
 autocmd FileType * set formatoptions-=c
 
 "{{{ Autocomplete settings
-set completeopt=longest,menuone
+set completeopt+=menuone,noinsert
+set completeopt-=menu,preview
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-" open omni completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
-" open user completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
-
+inoremap <expr> <C-n> pumvisible() ? "\<lt>Down>" : '<C-n>'
 "}}}
 
 " {{{ Find related options
@@ -203,20 +192,20 @@ endfun
 " {{{ Remaps
 let mapleader = "\\"
 
-no <down> <Nop>
-no <up> <Nop>
-no <left> <Nop>
-no <right> <Nop>
-
-ino <down> <Nop>
-ino <up> <Nop>
-ino <left> <Nop>
-ino <right> <Nop>
-
-vn <down> <Nop>
-vn <up> <Nop>
-vn <left> <Nop>
-vn <right> <Nop>
+"no <down> <Nop>
+"no <up> <Nop>
+"no <left> <Nop>
+"no <right> <Nop>
+"
+"ino <down> <Nop>
+"ino <up> <Nop>
+"ino <left> <Nop>
+"ino <right> <Nop>
+"
+"vn <down> <Nop>
+"vn <up> <Nop>
+"vn <left> <Nop>
+"vn <right> <Nop>
 
 nn <s-k> <Nop>
 nn ; :
