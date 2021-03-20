@@ -22,14 +22,14 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-smartinput'
-Plug 'alvan/vim-closetag', {'for': ['xml', 'html']}
-Plug 'mattn/emmet-vim', {'for': ['html', 'html.handlebars']}
+Plug 'alvan/vim-closetag', { 'for': ['xml', 'html'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'html.handlebars'] }
 "Plug 'othree/vim-autocomplpop'
-Plug 'vim-scripts/dbext.vim', {'for': ['sql']}
-Plug 'pangloss/vim-javascript', {'for': ['javascript']}
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['javascript']}
-Plug 'mustache/vim-mustache-handlebars', {'for': ['html.handlebars']}
-Plug 'maksimr/vim-jsbeautify', {'for': ['javascript']}
+Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
+"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['javascript', 'python', 'html.handlebars'] }
+"Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
+Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' }
 
 " {{{ Denite.vim
 Plug 'Shougo/denite.nvim'
