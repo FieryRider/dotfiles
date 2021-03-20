@@ -263,6 +263,23 @@ unzipd() {
   unzip -d "$output_folder" "$1"
 }
 
+python() {
+  args=$@
+  if [[ -d ./venv ]]; then
+    if [[ -z $args ]]; then
+      ./venv/bin/python
+    else
+      ./venv/bin/python $args
+    fi
+  else
+    if [[ -z $args ]]; then
+      command python
+    else
+      command python $args
+    fi
+  fi
+}
+
 ##### End Functions #####
 
 PATH=$PATH:~/.android/platform-tools/:~/.android/tools/:~/.android/tools/bin/:~/.local/share/npm/bin/:
