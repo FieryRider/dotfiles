@@ -258,44 +258,6 @@ EOF
   fi
 }
 
-backup-chromium() {
-  local backups; local num_of_backups; local num_backups_to_delete
-
-  for d in ~/bkp/chromium*; do
-    backups+=($d)
-  done
-  num_of_backups=${#backups[@]}
-
-  if [[ $num_of_backups -gt 7 ]]; then
-    num_backups_to_delete=$(( $num_of_backups - 7 ))
-    rm -r ${backups[@]:0:num_backups_to_delete}
-  fi
-
-  while pgrep chromium; do
-    sleep 4
-  done
-  cp -a ~/.config/chromium ~/bkp/chromium_$(date +%F_%H:%M)
-}
-
-backup-firefox() {
-  local backups; local num_of_backups; local num_backups_to_delete
-
-  for d in ~/bkp/mozilla_*; do
-    backups+=($d)
-  done
-  num_of_backups=${#backups[@]}
-
-  if [[ $num_of_backups -gt 7 ]]; then
-    num_backups_to_delete=$(( $num_of_backups - 7 ))
-    rm -r ${backups[@]:0:num_backups_to_delete}
-  fi
-
-  while [[ -n $(pidof firefox) ]]; do
-    sleep 4
-  done
-  cp -a ~/.mozilla ~/bkp/mozilla_$(date +%F_%H:%M)
-}
-
 unzipd() {
   output_folder=${1%%.zip}
   unzip -d "$output_folder" "$1"
