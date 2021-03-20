@@ -1,5 +1,4 @@
 " vim::foldmethod=marker:foldmarker={{{,}}}
-set completeopt=
 set fileformat=unix
 set encoding=utf-8
 set expandtab
