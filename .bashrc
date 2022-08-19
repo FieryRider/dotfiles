@@ -220,11 +220,11 @@ unzipd() {
 
 python() {
   args=$@
-  if [[ -d ./venv ]]; then
+  if [[ -d .venv ]]; then
     if [[ -z $args ]]; then
-      ./venv/bin/python
+      .venv/bin/python
     else
-      ./venv/bin/python $args
+      .venv/bin/python $args
     fi
   else
     if [[ -z $args ]]; then
