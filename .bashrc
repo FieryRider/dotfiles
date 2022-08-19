@@ -96,30 +96,32 @@ start-ssh-agent() {
 }
 
 iptables-off() {
+  sudo sh -c '
   # reset ipv4 iptables
-  /usr/bin/iptables -F
-  /usr/bin/iptables -X
-  /usr/bin/iptables -Z
-  for table in $(</proc/net/ip_tables_names); do
-      /usr/bin/iptables -t $table -F
-      /usr/bin/iptables -t $table -X
-      /usr/bin/iptables -t $table -Z
+  iptables -F
+  iptables -X
+  iptables -Z
+  for table in $(cat /proc/net/ip_tables_names); do
+      iptables -t $table -F
+      iptables -t $table -X
+      iptables -t $table -Z
   done
-  /usr/bin/iptables -P INPUT ACCEPT
-  /usr/bin/iptables -P OUTPUT ACCEPT
-  /usr/bin/iptables -P FORWARD ACCEPT
+  iptables -P INPUT ACCEPT
+  iptables -P OUTPUT ACCEPT
+  iptables -P FORWARD ACCEPT
   # reset ipv6 iptales
-  /usr/bin/ip6tables -F
-  /usr/bin/ip6tables -X
-  /usr/bin/ip6tables -Z
-  for table in $(</proc/net/ip6_tables_names); do
-      /usr/bin/ip6tables -t $table -F
-      /usr/bin/ip6tables -t $table -X
-      /usr/bin/ip6tables -t $table -Z
+  ip6tables -F
+  ip6tables -X
+  ip6tables -Z
+  for table in $(cat /proc/net/ip6_tables_names); do
+      ip6tables -t $table -F
+      ip6tables -t $table -X
+      ip6tables -t $table -Z
   done
-  /usr/bin/ip6tables -P INPUT ACCEPT
-  /usr/bin/ip6tables -P OUTPUT ACCEPT
-  /usr/bin/ip6tables -P FORWARD ACCEPT
+  ip6tables -P INPUT ACCEPT
+  ip6tables -P OUTPUT ACCEPT
+  ip6tables -P FORWARD ACCEPT
+  '
 }
 
 upgrade-python-venv() {
