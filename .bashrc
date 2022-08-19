@@ -41,54 +41,7 @@ fi
 [[ $(cat /etc/*-release | grep 'NAME') == *"Arch Linux"* ]] && release_arch=true || release_arch=false
 
 if $release_arch; then
-  sdserver() {
-    sudo umount -R /mnt/server/*
-    sudo umount -R /mnt/server
-    command ssh ivailo@server "sudo poweroff"
-  }
-
-  reboot-server() {
-    sudo umount -R /mnt/server/*
-    sudo umount -R /mnt/server
-    command ssh ivailo@server "sudo reboot"
-  }
-
-  mount-encr() {
-    sudo cryptsetup --type luks open /dev/sdb4 encr
-    sudo mount /dev/mapper/encr /mnt/encr/
-  }
-
-  umount-encr() {
-    sudo umount /mnt/encr/
-    sudo cryptsetup close /dev/mapper/encr
-  }
-
-  which-gpu() {
-    lspci -d 10de:13c2 -k | command grep -Po '(?<=Kernel driver in use: ).*'
-  }
-
-  gpu-vfio() {
-    sudo mv /etc/modprobe.d/vfio.conf.bak /etc/modprobe.d/vfio.conf
-    sudo mv /etc/modules-load.d/vfio.conf.bak /etc/modules-load.d/vfio.conf
-    sudo mv /etc/X11/xorg.conf /etc/X11/xorg.conf.bak
-    sudo sed -i 's/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/#MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-    sudo sed -i 's/#MODULES=(i915)/MODULES=(i915)/' /etc/mkinitcpio.conf
-    sudo mkinitcpio -p linux
-  }
-
-  gpu-nvidia() {
-    sudo mv /etc/modprobe.d/vfio.conf /etc/modprobe.d/vfio.conf.bak
-    sudo mv /etc/modules-load.d/vfio.conf /etc/modules-load.d/vfio.conf.bak
-    sudo mv /etc/X11/xorg.conf.bak /etc/X11/xorg.conf
-    sudo sed -i 's/#MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-    sudo sed -i 's/MODULES=(i915)/#MODULES=(i915)/' /etc/mkinitcpio.conf
-    sudo mkinitcpio -p linux
-  }
-
-  kill-ts3() {
-    pkill teamspeak3
-    pkill ts3client
-  }
+  :
 fi
 
 if $release_debian || $release_ubuntu ; then
