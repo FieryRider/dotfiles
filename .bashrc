@@ -235,6 +235,10 @@ python() {
   fi
 }
 
+cgrep() {
+  grep -v "^$2" $1 | grep -v '^$'
+}
+
 ##### End Functions #####
 
 PATH=$PATH:~/.android/platform-tools/:~/.android/tools/:~/.android/tools/bin/:~/.local/share/npm/bin/:~/.local/bin/:~/.local/bin/scripts
