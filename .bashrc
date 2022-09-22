@@ -5,7 +5,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='[\[\e[33;1m\]\u@\h:\[\e[01;34m\]\w\[\e[0m\]]\$ '
+source /usr/share/git/completion/git-prompt.sh
+source /usr/share/nvm/init-nvm.sh
+
+PS1='[\[\e[33;1m\]\u@\h:\[\e[01;34m\]\w\[\e[0m\]]\[\e[33;1m\]$(__git_ps1 "(%s)")\[\e[0m\]\$ '
 
 umask 0027
 
