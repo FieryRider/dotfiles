@@ -109,16 +109,22 @@ filetype indent on
 
 set fileformat=unix
 set encoding=utf-8
+
+" set statusline=%f%m%r\ %y\ \|\ %{GetBuffers()}\ %=\ [%n]\ %l,%c
 " }}}
 
 autocmd BufNewFile,BufRead * if &syntax == '' | set syntax=plain | endif
+autocmd BufNewFile,BufRead * cd . "Set current dir as working dir in netrw
 
 "Remove auto wrapping of comments
 autocmd FileType * set formatoptions-=c
 
+"Custom config for custom 7 Days To Die buffs language
+autocmd BufNewFile,BufRead *.7dbuff set ft=sdbuff
+
 "{{{ Autocomplete settings
-set completeopt+=menuone,noinsert
-set completeopt-=menu,preview
+set completeopt+=menu,menuone,noinsert
+set completeopt-=preview
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? "\<lt>Down>" : '<C-n>'
 "}}}
@@ -137,7 +143,7 @@ set inccommand=nosplit
 
 " {{{ Highlight settings
 set hlsearch    "highlights search results
-hi CursorLine cterm=NONE ctermbg=6 ctermfg=white guibg=darkred guifg=white      "adjust cursor color
+hi CursorLine cterm=NONE ctermbg=235 ctermfg=NONE guibg=235 guifg=NONE      "adjust cursor color
 set cul         "highlights current line
 " }}}
 
@@ -225,6 +231,19 @@ fun! UpByIndent()
     endif
   endwhile
 endfun
+
+" fun! GetBuffers()
+"   let all = range(0, bufnr('$'))
+"   let res = []
+"   for b in all
+"     let buf_status_name = printf('%s[%d]', fnamemodify(bufname(b), ':.'), bufnr(b))
+"     if buflisted(b) && index(res, buf_status_name) == -1 && bufname(b) != @%
+"       call add(res, buf_status_name)
+"     endif
+"   endfor
+"   let bfs = ''.join(res, ' ')
+"   return bfs
+" endfun
 " }}}
 
 " {{{ Remaps
@@ -245,11 +264,11 @@ let mapleader = "\\"
 "vn <left> <Nop>
 "vn <right> <Nop>
 
-nn <s-k> <Nop>
 nn ; :
 nn : ;
 nn <c-p> :call UpByIndent()<cr>
-nn <Leader>e :Explore<CR>
+" nn <Leader>e :Explore .<CR>
+nn <Leader>e :Neotree<CR>
 nn <Leader>f :FufFile<CR>
 nn go o<ESC>k
 nn gO O<ESC>j
@@ -257,7 +276,8 @@ nn <leader>t :tabnew<CR>
 nn <leader>w :tabclose<CR>
 nn gn :tabnext<CR>
 nn gp :tabprev<CR>
-"ino <expr> <S-Tab> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
+"prevents the yanking of text that is pasted over in visual mode
+vn p "_dP
 "selection remains after indenting
 vn < <gv
 vn > >gv
@@ -268,5 +288,6 @@ nn g. :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 
 "Same mappings as above but for visual mode
 vn g, <Esc>:call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>m'gv''
 vn g. <Esc>:call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>m'gv''
-
+"Search selected
+vn // y/\V<C-R>=escape(@",'/\')<CR><CR>
 " }}}
