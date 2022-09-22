@@ -5,8 +5,16 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-source /usr/share/git/completion/git-prompt.sh
-source /usr/share/nvm/init-nvm.sh
+if [[ -z ${GIT_COMPL_CONF_FILE} ]]; then
+  echo 'git completion config file not set. Set $GIT_COMPL_CONF_FILE'
+else
+  source "$GIT_COMPL_CONF_FILE"
+fi
+if [[ -z ${NVM_INIT_CONF_FILE} ]]; then
+  echo 'init-nvm.sh script file path not set. Set $NVM_INIT_CONF_FILE'
+else
+  source $NVM_INIT_CONF_FILE
+fi
 
 PS1='[\[\e[33;1m\]\u@\h:\[\e[01;34m\]\w\[\e[0m\]]\[\e[33;1m\]$(__git_ps1 "(%s)")\[\e[0m\]\$ '
 
