@@ -18,33 +18,48 @@ call plug#begin()
 
 "Plug 'vim-scripts/L9'
 "Plug 'vim-scripts/FuzzyFinder'
+
+"Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
+"Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'kyazdani42/nvim-web-devicons' " not strictly required, but recommended
+Plug 'MunifTanjim/nui.nvim'
+
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'kana/vim-smartinput'
 Plug 'alvan/vim-closetag', { 'for': ['xml', 'html'] }
-Plug 'mattn/emmet-vim', { 'for': ['html', 'html.handlebars'] }
-"Plug 'othree/vim-autocomplpop'
+Plug 'leafOfTree/vim-vue-plugin', { 'for': ['vue'] }
+Plug 'mattn/webapi-vim', { 'for': ['html', 'html.handlebars', 'vue'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'html.handlebars', 'vue', 'javascriptreact', 'typescriptreact'] }
+" Plug 'othree/vim-autocomplpop'
 Plug 'vim-scripts/dbext.vim', { 'for': 'sql' }
-"Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['javascript', 'python', 'html.handlebars'] }
-"Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
+Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'typescript' ] }
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': [ 'javascript', 'typescript' ] }
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'hrsh7th/cmp-nvim-lsp'
+"Plug 'hrsh7th/cmp-buffer'
+"Plug 'hrsh7th/nvim-cmp'
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'for': ['html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'html.handlebars', 'cs', 'xml', 'python', 'markdown'] }
+Plug 'mustache/vim-mustache-handlebars', { 'for': 'html.handlebars' }
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 "Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
-"Plug 'posva/vim-vue'
+Plug 'posva/vim-vue', { 'for': 'vue' }
+Plug 'dsznajder/vscode-es7-javascript-react-snippets', { 'do': 'yarn install --frozen-lockfile && yarn compile', 'for': ['javascriptreact', 'typescriptreact'] }
 
 " {{{ Denite.vim
-Plug 'Shougo/denite.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+"Plug 'Shougo/denite.nvim'
+"Plug 'roxma/nvim-yarp'
+"Plug 'roxma/vim-hug-neovim-rpc'
 " }}}
 
 "{{{ Markdown
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
-"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'markdown' }
+"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'markdown' }
 "}}}
 
 "{{{ C++
@@ -59,7 +74,25 @@ Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
 call plug#end()
 " }}}
 
-" {{{ Standart config
+" {{{ NeoTree
+let g:neo_tree_remove_legacy_commands = 1
+lua require('config/neo_tree')
+" }}}
+" {{{ NvimTRee
+"lua require('config/nvim_tree')
+" }}}
+" {{{ LSP
+"lua << EOF
+"require'lspconfig'.jedi_language_server.setup{}
+"EOF
+"
+"lua require('plugins/compe-config')
+" }}}
+" {{{ Coc config
+" let g:coc_global_extensions = ['coc-css', 'coc-emmet', 'coc-html', 'coc-json', 'coc-omnisharp', 'coc-pyright', 'coc-snippets', 'coc-tsserver', 'coc-vetur']
+" }}}
+
+" {{{ Standard config
 set viminfo='100,<500,s100,h
 "Disable mouse support (This was the default setting in previous versions)
 set mouse=
