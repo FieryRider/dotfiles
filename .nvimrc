@@ -74,6 +74,66 @@ Plug 'm2mdas/phpcomplete-extended', { 'for': 'php' }
 call plug#end()
 " }}}
 
+" {{{ Functions
+fun! UpByIndent()
+  norm! ^
+  let start_col = col(".")
+  let col = start_col
+  while col >= start_col
+    norm! k^
+    if getline(".") =~# '^\s*$'
+      let col = start_col
+    elseif col(".") <= 1
+      return
+    else
+      let col = col(".")
+    endif
+  endwhile
+endfun
+
+" fun! GetBuffers()
+"   let all = range(0, bufnr('$'))
+"   let res = []
+"   for b in all
+"     let buf_status_name = printf('%s[%d]', fnamemodify(bufname(b), ':.'), bufnr(b))
+"     if buflisted(b) && index(res, buf_status_name) == -1 && bufname(b) != @%
+"       call add(res, buf_status_name)
+"     endif
+"   endfor
+"   let bfs = ''.join(res, ' ')
+"   return bfs
+" endfun
+
+function! List_match_re(list, to_be_matched, ...) abort
+  let idx = (a:0>0) ? a:1 : 0
+
+  while idx < len(a:list)
+    if a:list[idx] =~ a:to_be_matched
+      return a:list[idx]
+    endif
+    let idx += 1
+  endwhile
+  return v:null
+
+  " The following doesn't improve performances significantly
+  " let res = [-1]
+  " call map(a:list[idx:], 'add(res, res[-1] >= 0 ? res[-1] : (match(a:to_be_matched, v:val)>=0 ? v:key : -1))')
+  " return res[-1]+idx
+endfunction
+
+function! GetDefaultNvmVersion()
+  let nvm_ver_file = $NVM_DIR . '/alias/default'
+  let nvm_ver = readfile(nvm_ver_file)[0]
+  let nvm_versions = (systemlist('ls ' . $NVM_DIR . '/versions/node'))
+  let nvm_version = List_match_re(nvm_versions, 'v' . nvm_ver . '.*')
+  if nvm_version != v:null
+    return nvm_version
+  else
+    return v:null
+  endif
+endfunction
+" }}}
+
 " {{{ NeoTree
 let g:neo_tree_remove_legacy_commands = 1
 lua require('config/neo_tree')
@@ -90,6 +150,11 @@ lua require('config/neo_tree')
 " }}}
 " {{{ Coc config
 " let g:coc_global_extensions = ['coc-css', 'coc-emmet', 'coc-html', 'coc-json', 'coc-omnisharp', 'coc-pyright', 'coc-snippets', 'coc-tsserver', 'coc-vetur']
+
+let nvm_version = GetDefaultNvmVersion()
+if nvm_version != v:null
+  let g:coc_node_path = $NVM_DIR . '/versions/node/' . nvm_version . '/bin/node'
+endif
 " }}}
 
 " {{{ Standard config
@@ -213,37 +278,6 @@ elseif TERM_EMU =~ 'konsole'
     " 2 -> underscore
   endif
 endif
-" }}}
-
-" {{{ Functions
-fun! UpByIndent()
-  norm! ^
-  let start_col = col(".")
-  let col = start_col
-  while col >= start_col
-    norm! k^
-    if getline(".") =~# '^\s*$'
-      let col = start_col
-    elseif col(".") <= 1
-      return
-    else
-      let col = col(".")
-    endif
-  endwhile
-endfun
-
-" fun! GetBuffers()
-"   let all = range(0, bufnr('$'))
-"   let res = []
-"   for b in all
-"     let buf_status_name = printf('%s[%d]', fnamemodify(bufname(b), ':.'), bufnr(b))
-"     if buflisted(b) && index(res, buf_status_name) == -1 && bufname(b) != @%
-"       call add(res, buf_status_name)
-"     endif
-"   endfor
-"   let bfs = ''.join(res, ' ')
-"   return bfs
-" endfun
 " }}}
 
 " {{{ Remaps
